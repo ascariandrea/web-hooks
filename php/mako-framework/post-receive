@@ -30,7 +30,7 @@ echo -e "${light_green}*************${no_color}"
 echo -e "${light_green}Deploying $APP ${no_color}"
 echo -e "${light_green}************* ${no_color}"
 
-cd $APP_ROOT || echo "${red}Missing app root. ${no_color}"
+cd $APP_ROOT || echo "${red}Missing app root. ${no_color}" && return
 
 echo "*************"
 echo "Pull updates from remote."

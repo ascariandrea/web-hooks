@@ -13,9 +13,9 @@ ENV='production'
 
 
 index_file=index.js
-err_log=/srv/www/sample-app/logs/error.log
-log_log=/srv/www/converter/log/log.log
-out_log=/srv/www/converter/log/out.log
+err_log="${APP_ROOT}/logs/error.log"
+log_log="${APP_ROOT}/logs/log.log"
+out_log="${APP_ROOT}/logs/out.log"
 
 # Colors
 
@@ -36,7 +36,7 @@ echo -e "${light_green}*************${no_color}"
 echo -e "${light_green}Deploying $APP ${no_color}"
 echo -e "${light_green}************* ${no_color}"
 
-cd $APP_ROOT || echo "${red}Missing app root. ${no_color}"
+cd $APP_ROOT || echo "${red}Missing app root. ${no_color}" && return
 
 echo "*************"
 echo "Pull updates from remote."
@@ -66,7 +66,9 @@ echo "***********"
 echo "Restart node process."
 echo "***********"
 
-forever restart -a -l $log_log -o $out_log -e $err_log $index_file
+
+forever stop $APP_ROOT/$index_file
+forever start -a -l $log_log -o $out_log -e $err_log $APP_ROOT$index_file
 
 echo -e "${light_green}************** ${no_color}"
 echo -e "${light_green}Deploy end. ${no_color}"
