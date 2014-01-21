@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# An example hook script for the "post-receive" event.
+
+APP="Gift - API"
+APP_ROOT=/srv/www/gift/api
+ENV='production'
+
+echo "*************"
+echo "Deploying $APP"
+echo "*************"
+
+cd $APP_ROOT || echo "Missing app root."
+
+
+echo "*************"
+echo "Pull updates from remote."
+echo "*************"
+
+unset GIT_DIR
+git pull origin master
+
+echo "************"
+echo "Updates pulled."
+echo "************"
+
+echo "************"
+echo "Moving to 'app' dir."
+echo "************"
+
+cd app
+
+
+echo "************"
+echo "Check if there are pending migrations."
+echo "************"
+
+php reactor migrate.status --env=$ENV
+
+echo "**************"
+echo "Deploy end."
+echo "**************"
