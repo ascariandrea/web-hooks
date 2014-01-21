@@ -3,10 +3,10 @@
 # An example hook script for the "post-receive" event.
 
 ## App name
-APP="Gift - API"
+APP="Sample App"
 
 # App root.
-APP_ROOT=/srv/www/gift/api
+APP_ROOT=/srv/www/sample-app
 
 # App environment
 ENV='production'
@@ -58,4 +58,4 @@ php reactor migrate.status --env=$ENV
 
 echo -e "${light_green}************** ${no_color}"
 echo -e "${light_green}Deploy end. ${no_color}"
-echo -e "{$light_green}************** ${no_color}"
+echo -e "${$light_green}************** ${no_color}"
