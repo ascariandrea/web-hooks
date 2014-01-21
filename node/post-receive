@@ -28,9 +28,9 @@ out_log="${APP_ROOT}/logs/out.log"
 # Brown/Orange 0;33     Yellow        1;33
 # Light Gray   0;37     White         1;37
 
-red='\e[0;31m';
-light_green='\e[1;32m';
-no_color='\e[0m';
+red='\e[0;31m'
+light_green='\e[1;32m'
+no_color='\e[0m'
 
 echo -e "${light_green}*************${no_color}"
 echo -e "${light_green}Deploying $APP ${no_color}"
