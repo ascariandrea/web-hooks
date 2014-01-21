@@ -36,7 +36,7 @@ echo -e "${light_green}*************${no_color}"
 echo -e "${light_green}Deploying $APP ${no_color}"
 echo -e "${light_green}************* ${no_color}"
 
-cd $APP_ROOT || echo "${red}Missing app root. ${no_color}" && return
+cd $APP_ROOT || echo -e "${red}Missing app root. ${no_color}" && return
 
 echo "*************"
 echo "Pull updates from remote."
@@ -49,12 +49,6 @@ echo "************"
 echo "Updates pulled."
 echo "************"
 
-echo "************"
-echo "Moving to 'app' dir."
-echo "************"
-
-cd app
-
 
 echo "************"
 echo "Check if there are node modules to install."
@@ -66,10 +60,9 @@ echo "***********"
 echo "Restart node process."
 echo "***********"
 
-
 forever stop $APP_ROOT/$index_file
 forever start -a -l $log_log -o $out_log -e $err_log $APP_ROOT$index_file
 
 echo -e "${light_green}************** ${no_color}"
 echo -e "${light_green}Deploy end. ${no_color}"
-echo -e "${$light_green}************** ${no_color}"
+echo -e "${light_green}************** ${no_color}"
