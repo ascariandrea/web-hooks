@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/sh
 #
 # An example hook script for the "post-receive" event.
 
