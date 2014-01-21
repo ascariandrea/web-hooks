@@ -1,4 +1,4 @@
-#!usr/bin/sh
+#!bin/sh
 #
 # An example hook script for the "post-receive" event.
 
@@ -7,9 +7,10 @@ APP="Sample App"
 
 # App root.
 APP_ROOT=/srv/www/sample-app
+APP_APP_DIR=$APP_ROOT/app
 
 # App environment
-ENV='production'
+ENV='dev'
 
 # Colors
 
@@ -22,15 +23,15 @@ ENV='production'
 # Brown/Orange 0;33     Yellow        1;33
 # Light Gray   0;37     White         1;37
 
-red='\e[0;31m';
-light_green='\e[1;32m';
-no_color='\e[0m';
+red='\e[0;31m'
+light_green='\e[1;32m'
+no_color='\e[0m'
 
 echo -e "${light_green}*************${no_color}"
 echo -e "${light_green}Deploying $APP ${no_color}"
 echo -e "${light_green}************* ${no_color}"
 
-cd $APP_ROOT || echo -e "${red}Missing app root. ${no_color}" && return
+cd $APP_ROOT || echo -e "${red}Missing app root. ${no_color}"
 
 echo -e "*************"
 echo -e "Pull updates from remote."
@@ -47,14 +48,15 @@ echo -e "************"
 echo -e "Moving to 'app' dir."
 echo -e "************"
 
-cd app || echo -e "${red} Missing app dir. ${no_color}" && return
+cd $APP_APP_DIR || echo -e "${red} Missing app dir. ${no_color}"
 
 
 echo "************"
-echo "Check if there are pending migrations."
+echo "Migrate the db..."
 echo "************"
 
-php reactor migrate.status --env=$ENV
+php reactor migrate.up --env=$ENV
+
 
 echo -e "${light_green}************** ${no_color}"
 echo -e "${light_green}Deploy end. ${no_color}"
