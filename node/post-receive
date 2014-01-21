@@ -1,0 +1,73 @@
+#!/bin/sh
+#
+# An example hook script for the "post-receive" event.
+
+## App name
+APP="Sample App"
+
+# App root.
+APP_ROOT=/srv/www/sample-app
+
+# App environment
+ENV='production'
+
+
+index_file=index.js
+err_log=/srv/www/sample-app/logs/error.log
+log_log=/srv/www/converter/log/log.log
+out_log=/srv/www/converter/log/out.log
+
+# Colors
+
+# Black        0;30     Dark Gray     1;30
+# Blue         0;34     Light Blue    1;34
+# Green        0;32     Light Green   1;32
+# Cyan         0;36     Light Cyan    1;36
+# Red          0;31     Light Red     1;31
+# Purple       0;35     Light Purple  1;35
+# Brown/Orange 0;33     Yellow        1;33
+# Light Gray   0;37     White         1;37
+
+red='\e[0;31m';
+light_green='\e[1;32m';
+no_color='\e[0m';
+
+echo -e "${light_green}*************${no_color}"
+echo -e "${light_green}Deploying $APP ${no_color}"
+echo -e "${light_green}************* ${no_color}"
+
+cd $APP_ROOT || echo "${red}Missing app root. ${no_color}"
+
+echo "*************"
+echo "Pull updates from remote."
+echo "*************"
+
+unset GIT_DIR
+git pull origin master
+
+echo "************"
+echo "Updates pulled."
+echo "************"
+
+echo "************"
+echo "Moving to 'app' dir."
+echo "************"
+
+cd app
+
+
+echo "************"
+echo "Check if there are node modules to install."
+echo "************"
+
+npm install
+
+echo "***********"
+echo "Restart node process."
+echo "***********"
+
+forever restart -a -l $log_log -o $out_log -e $err_log $index_file
+
+echo -e "${light_green}************** ${no_color}"
+echo -e "${light_green}Deploy end. ${no_color}"
+echo -e "${$light_green}************** ${no_color}"
