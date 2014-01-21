@@ -1,4 +1,4 @@
-#!/bin/sh
+#!usr/bin/sh
 #
 # An example hook script for the "post-receive" event.
 
@@ -47,7 +47,7 @@ echo -e "************"
 echo -e "Moving to 'app' dir."
 echo -e "************"
 
-cd app || echo -e "${red} Missing app dir. ${no_color}" && return;
+cd app || echo -e "${red} Missing app dir. ${no_color}" && return
 
 
 echo "************"
